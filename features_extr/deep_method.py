@@ -5,6 +5,7 @@ from keras.preprocessing import image
 import os
 import cv2
 import matplotlib.pyplot as plt
+import pickle
 
 def deep_method (img_class, img_query, dir_dataset,dirImgOut):
 
@@ -27,6 +28,7 @@ def deep_method (img_class, img_query, dir_dataset,dirImgOut):
     dire= dir_dataset+'\\'+ img_class
 
     features_dataset= []
+    """
     for img in os.listdir(dire):
         dataset_dir = os.path.join(dire, img)
         img_dataset = image.load_img(dataset_dir, target_size=(80, 60))
@@ -36,6 +38,13 @@ def deep_method (img_class, img_query, dir_dataset,dirImgOut):
         #print(img)
         features_dataset.append((encoder.predict(img_dataset),img))
     
+    pkl_filename =os.path.dirname(__file__) + '/../models/'+"DeepMethod_"+img_class + ".pkl"
+    with open(pkl_filename, 'wb') as file:
+        pickle.dump(features_dataset, file)
+    """
+    pkl_filename =os.path.dirname(__file__) + '/../models/'+"DeepMethod_"+img_class + ".pkl"
+    with open(pkl_filename, 'rb') as file:
+        features_dataset = pickle.load(file)
     results = []
     # loop over our index
     for i in range(0, len(features_dataset)):
