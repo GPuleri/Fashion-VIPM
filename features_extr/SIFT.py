@@ -9,6 +9,7 @@ from sklearn.preprocessing import Normalizer
 import warnings
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KDTree
+import pickle
 warnings.filterwarnings("ignore")
 
 class SiftExtraction:
@@ -66,7 +67,7 @@ class SiftExtraction:
         return [descriptor_list, descriptor_list_append, sift_vectors]
     
     @staticmethod
-    def create_cluster(num_centroidi, sift_descrptors):
+    def create_cluster(num_centroidi, sift_descrptors,classe_predetta):
         #inizializziamo l'oggetto "KMeans" impostando il numero di centroidi
         kmeans = KMeans(num_centroidi)
         #avviamo il kmeans sulle feature estratte
@@ -76,23 +77,26 @@ class SiftExtraction:
         elapsed_time=end_time-start_time
         print ("Total time: {0:0.2f} sec.".format(elapsed_time))
         print(kmeans.cluster_centers_.shape)
+        pkl_filename =os.path.dirname(__file__) + '/../models/'+"SIFT_"+classe_predetta + ".pkl"
+        with open(pkl_filename, 'wb') as file:
+            pickle.dump(kmeans, file)
         return kmeans
     
     @staticmethod
-    def describe_dataset(descriptor_list,kmeans):
+    def describe_dataset(descriptor_list,kmeans,num_claster):
         X=list() #inizializziamo la lista delle osservazioni
         
         for descriptor in descriptor_list:
            # print(len(descriptor))
             assignments= kmeans.predict(descriptor)
-            bovw_representation, _ = np.histogram(assignments, bins=1250, range=(0,1249))
+            bovw_representation, _ = np.histogram(assignments, bins=num_claster, range=(0,num_claster-1))
            # print(bovw_representation)
             X.append(bovw_representation)
         return X
        
     
     @staticmethod 
-    def query_image(path,tree,idf,path_training,kmeans):
+    def query_image(path,tree,idf,path_training,kmeans,num_claster):
         X=list()
         img = cv2.imread(path,0)
         sift = cv2.xfeatures2d.SIFT_create()
@@ -102,7 +106,7 @@ class SiftExtraction:
             des = np.zeros((1, sift.descriptorSize()), np.float32)
             #descriptor_list_append.append(no_kp)
         assignments= kmeans.predict(des)
-        bovw_representation, _ = np.histogram(assignments, bins=1250, range=(0,1249))
+        bovw_representation, _ = np.histogram(assignments, bins=num_claster, range=(0,num_claster-1))
         X.append(bovw_representation)
         X_test_tfidf=X*idf
         norm = Normalizer(norm='l2')
@@ -118,6 +122,14 @@ class SiftExtraction:
             #print(indice)
             closest_im.append(path_training[indice])
         return closest_im
+    
+    @staticmethod
+    def get_model (classe_predetta):
+        pkl_filename =os.path.dirname(__file__) + '/../models/'+"SIFT_"+classe_predetta + ".pkl"
+        with open(pkl_filename, 'rb') as file:
+            pickle_model = pickle.load(file)
+        return pickle_model
+
 
 def sift_extraction_bow (classe_predetta,img_query,dir_dataset,dirImgOut):
     images, paths, y_training= SiftExtraction.load_images_from_folder(dir_dataset,classe_predetta)
@@ -135,9 +147,17 @@ def sift_extraction_bow (classe_predetta,img_query,dir_dataset,dirImgOut):
     # Takes the sift features that is seperated class by class for train data
     all_bovw_feature = sifts[2] 
 
-    centroidi = SiftExtraction.create_cluster(1250, concatenated_features)
+    #centroidi = SiftExtraction.create_cluster(150, concatenated_features,classe_predetta)
 
-    X = SiftExtraction.describe_dataset(descriptor_list_append,centroidi)
+    centroidi = SiftExtraction.get_model(classe_predetta)
+    num_claster=1250
+    if (classe_predetta == 'Apparel Set' or classe_predetta == 'Cufflinks'):
+        num_claster=100
+    elif (classe_predetta == 'Headwear' or classe_predetta == 'Ties'):
+            num_claster=150
+
+
+    X = SiftExtraction.describe_dataset(descriptor_list_append,centroidi,num_claster)
 
     #binarizziamo il vettore di rappresentazioni X_training
     #otterremo una matrice n x 500 in cui l'elemento x_ij
@@ -162,7 +182,7 @@ def sift_extraction_bow (classe_predetta,img_query,dir_dataset,dirImgOut):
 
     tree = KDTree(X_training_tfidf_l2)
 
-    closest_im = SiftExtraction.query_image(img_query,tree,idf,paths,centroidi)
+    closest_im = SiftExtraction.query_image(img_query,tree,idf,paths,centroidi,num_claster)
 
     print(closest_im)
 

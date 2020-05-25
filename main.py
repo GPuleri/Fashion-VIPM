@@ -18,7 +18,6 @@ parser.add_option('-q', '--query',
 options, args = parser.parse_args()
 img_path=options.query
 classe_pred = classi.classify(img_path)
-print(classe_pred)
 dir_dataset='C:\\Users\\fabio\\Downloads\\dataset_category\\dataset_category'
 dirName, fileBaseName, fileExtension = fileparts(img_path)
 features_extr.SIFT.sift_extraction_bow(classe_pred,img_path, dir_dataset,dirName)

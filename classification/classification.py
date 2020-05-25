@@ -5,7 +5,7 @@ from keras.preprocessing import image
 import os
 
 def classify (img_query):
-    model = load_model(os.path.dirname(__file__) + '/../modello.h5')
+    model = load_model(os.path.dirname(__file__) + '/../models/modello.h5')
 
     img = image.load_img(img_query, target_size=(80, 60))
     img_tensor = image.img_to_array(img)

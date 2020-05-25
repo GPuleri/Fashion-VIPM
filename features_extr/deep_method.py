@@ -13,7 +13,7 @@ def deep_method (img_class, img_query, dir_dataset,dirImgOut):
     img_tensor = np.expand_dims(img_tensor, axis=0)
     img_tensor /= 255.
     
-    model = load_model(os.path.dirname(__file__) +'/../modello.h5')
+    model = load_model(os.path.dirname(__file__) +'/../models/modello.h5')
     # Get encoder layer from trained model
 
     encoder = Model(inputs=model.input, outputs=model.layers[3].output)
