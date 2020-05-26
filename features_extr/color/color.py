@@ -13,7 +13,7 @@ def color (dir_class, img_query, dir_dataset, dirImgOut):
     output = open('features_extr/color/descriptor/index_' + dir_class + '_dataset.csv', "w")
 
     # use glob to grab the image paths and loop over them
-    for imagePath in glob.glob('C:\\Users\\pule\\Documents\\dataset_category\\' + dir_class + "/*.jpg"):
+    for imagePath in glob.glob('C:\\Users\\fabio\\Downloads\\dataset_category\\dataset_category\\' + dir_class + "/*.jpg"):
         # extract the image ID (i.e. the unique filename) from the image
         # path and load the image itself
         imageID = imagePath[imagePath.rfind("/") + 1:]
