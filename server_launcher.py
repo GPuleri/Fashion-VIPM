@@ -22,9 +22,9 @@ def imageHandler(bot, message, chat_id, local_filename):
 	new_fn = os.path.join(dirName, 'SIFT_result.jpg')
 	colorResult = os.path.join(dirName, 'color_result.jpg')
 	deepResult= os.path.join(dirName, 'DeepMethod_result.jpg')
-	bot.sendImage(chat_id, new_fn, "")
+	#bot.sendImage(chat_id, new_fn, "")
 	bot.sendImage(chat_id, colorResult, "")
-	bot.sendImage(chat_id, deepResult, "")
+	#bot.sendImage(chat_id, deepResult, "")
 
 
 if __name__ == "__main__":

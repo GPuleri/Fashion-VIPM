@@ -22,6 +22,6 @@ img_path=options.query
 dir_dataset = 'C:\\Users\\pule\\Documents\\dataset_category'
 classe_pred = classi.classify(img_path, dir_dataset)
 dirName, fileBaseName, fileExtension = fileparts(img_path)
-features_extr.SIFT.sift_extraction_bow(classe_pred,img_path, dir_dataset,dirName)
+#features_extr.SIFT.sift_extraction_bow(classe_pred,img_path, dir_dataset,dirName)
 color.color(classe_pred,img_path,dir_dataset,dirName)
-features_extr.deep_method.deep_method(classe_pred,img_path, dir_dataset,dirName)
+#features_extr.deep_method.deep_method(classe_pred,img_path, dir_dataset,dirName)

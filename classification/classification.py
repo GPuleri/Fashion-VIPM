@@ -4,7 +4,7 @@ import numpy as np
 from keras.preprocessing import image
 import os
 
-def classify (img_query):
+def classify (img_query, dir_dataset):
     model = load_model(os.path.dirname(__file__) + '/../models/modello.h5')
 
     img = image.load_img(img_query, target_size=(80, 60))
@@ -16,9 +16,9 @@ def classify (img_query):
     
     y_classes= predictions.argmax(axis=-1)
     
-    classi = ['Apparel Set','Bags and Wallets', 'Belts', 'Bottomwear', 'Cufflinks','Dress','Eyewear','Flip Flops','Fragrance','Headwear','Innerwear','Jewellery','Sandal','Saree','Scarves','Shoes','Socks','Ties','Topwear','Watches']
-    
-    print( classi[y_classes[0]])
+    classi = os.listdir(dir_dataset)
+    classi.sort()
+    print(classi[y_classes[0]])
 
     return classi[y_classes[0]]
 
