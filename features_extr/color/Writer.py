@@ -4,9 +4,9 @@ import glob, cv2, os
 
 
 # initialize the color descriptor
-cd = ColorDescriptor((8, 12, 3))
+cd = ColorDescriptor((16, 24, 3))
 
-classi = os.listdir('C:\\Users\\pule\\Documents\\dataset_category\\')
+classi = os.listdir('C:\\Users\\fabio\\Downloads\\dataset_category\\dataset_category')
 classi.sort()
 
 for classe in classi:
@@ -14,7 +14,7 @@ for classe in classi:
     output = open('descriptor/index_' + classe + '_dataset.csv', "w")
 
     # use glob to grab the image paths and loop over them
-    for imagePath in glob.glob('C:\\Users\\pule\\Documents\\dataset_category\\' + classe + "/*.jpg"):
+    for imagePath in glob.glob('C:\\Users\\fabio\\Downloads\\dataset_category\\dataset_category\\' + classe + "/*.jpg"):
         # extract the image ID (i.e. the unique filename) from the image
         # path and load the image itself
         imageID = imagePath[imagePath.rfind("/") + 1:]
