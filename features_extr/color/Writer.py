@@ -12,6 +12,7 @@ classi.sort()
 for classe in classi:
     # open the output index file for writing
     output = open('descriptor/index_' + classe + '_dataset.csv', "w")
+    
 
     # use glob to grab the image paths and loop over them
     for imagePath in glob.glob('C:\\Users\\fabio\\Downloads\\dataset_category\\dataset_category\\' + classe + "/*.jpg"):
