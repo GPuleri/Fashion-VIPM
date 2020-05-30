@@ -4,7 +4,7 @@ import glob, cv2, os
 
 
 # initialize the color descriptor
-cd = ColorDescriptor((16, 24, 3))
+cd = ColorDescriptor((8, 8, 8))
 
 classi = os.listdir('C:\\Users\\fabio\\Downloads\\dataset_category\\dataset_category')
 classi.sort()

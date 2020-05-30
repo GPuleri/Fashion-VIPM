@@ -4,6 +4,7 @@ import features_extr.SIFT
 import features_extr.color.color as color
 import optparse
 import os, sys, platform, subprocess
+import features_extr.Daisy 
 
 def fileparts(fn):
 	(dirName, fileName) = os.path.split(fn)
@@ -25,3 +26,4 @@ dirName, fileBaseName, fileExtension = fileparts(img_path)
 features_extr.SIFT.sift_extraction_bow(classe_pred,img_path, dir_dataset,dirName)
 color.color(classe_pred,img_path,dir_dataset,dirName)
 features_extr.deep_method.deep_method(classe_pred,img_path, dir_dataset,dirName)
+features_extr.Daisy.daisy_extraction(classe_pred,img_path, dir_dataset,dirName)
