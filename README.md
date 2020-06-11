@@ -1,9 +1,9 @@
 # Content-Based Fashion Image Retrieval #
 
 ## Group Members ##
-Fabio Cimmino
-Roberto Lotterio
-Gianluca Puleri
+* Fabio Cimmino
+* Roberto Lotterio
+* Gianluca Puleri
 
 ## Description ##
 We have realized a system which allows the retrieve of the similar images given a query image.
@@ -20,3 +20,5 @@ Given the query image:
 
 The features of each image contained into the dataset are previously computed and then saved.
 
+## Solution design ##
+![solution_design](solution_design.PNG)
