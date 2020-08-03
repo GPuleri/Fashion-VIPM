@@ -22,3 +22,13 @@ The features of each image contained into the dataset are previously computed an
 
 ## Solution design ##
 ![solution_design](solution_design.PNG)
+
+## How to run ##
+1. Create a new bot on Telegram by opening a chat with @BotFather
+2. Send command /newbot
+3. When asked, insert a name and a username for your new bot
+4. BotFather sends you the token to access to your bot
+5. Open the file server_launcher.py and change the bot_id variable by assigning the token previously taken
+6. Launch the script that will become the server of your Telegram bot (requires python 3)
+  ``` python server_launcher.py``` 
+7. Test it by opening a chat with your just-created bot and send him a picture.
